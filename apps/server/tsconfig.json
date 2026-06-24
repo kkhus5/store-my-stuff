@@ -1,0 +1,8 @@
+{
+  "extends": "@store-my-stuff/typescript-config/node.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src"]
+}

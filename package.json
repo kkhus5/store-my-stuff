@@ -1,0 +1,19 @@
+{
+  "name": "store-my-stuff",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "turbo": "^2.9.18",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
