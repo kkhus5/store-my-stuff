@@ -10,7 +10,9 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.2"
   },
   "devDependencies": {
     "@store-my-stuff/typescript-config": "workspace:*",
