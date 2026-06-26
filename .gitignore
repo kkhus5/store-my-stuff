@@ -1,5 +1,18 @@
+# dotenv environment variable files
+.env
+.env.*
+
+# Dependency directories
 node_modules
+
+# Build Artifacts
 dist
+
+# Turborepo
 .turbo
+
+# pnpm
 .pnpm-store
+
+# TypeScript cache
 *.tsbuildinfo

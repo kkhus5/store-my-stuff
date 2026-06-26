@@ -1,7 +1,12 @@
+// Do not remove this import. It is used to ingest environment files.
+import "./config/ingestEnvironmentFiles.js";
+
 import express from "express";
 
+import { serverPort } from "./config/index.js";
+import { connectMongoose } from "./utils/mongoConfig.js";
+
 const app = express();
-const port = process.env.PORT || 3001;
 
 app.use(express.json());
 
@@ -9,6 +14,12 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+const setup = async () => {
+  await connectMongoose();
+
+  app.listen(serverPort, () => {
+    console.log("server running", { port: serverPort });
+  });
+};
+
+setup();
