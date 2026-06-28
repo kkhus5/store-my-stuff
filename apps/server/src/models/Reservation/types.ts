@@ -4,11 +4,13 @@
  * - `PENDING` — the customer is in the process of booking.
  * - `RESERVED` — the customer successfully paid for the reservation.
  * - `CANCELED` — the customer canceled or backed out of the reservation.
+ * - `ENDED` — the reservation period has ended.
  */
 export enum ReservationStatus {
     PENDING = "PENDING",
     RESERVED = "RESERVED",
-    CANCELED = "CANCELED"
+    CANCELED = "CANCELED",
+    ENDED = "ENDED"
 }
 
 /**
