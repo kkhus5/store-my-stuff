@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 import { api } from "../../api";
 import { getAllBusinessHours } from "../../utils/formatBusinessHours";
@@ -50,9 +51,10 @@ export const StoreSelection = () => {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {stores.map((store) => (
-                    <div
+                    <Link
                         key={store.id}
-                        className="flex cursor-pointer flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5"
+                        to={`/stores/${store.id}/reserve`}
+                        className="flex flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5"
                     >
                         <h3 className="text-lg font-semibold text-gray-900">
                             {store.name}
@@ -83,7 +85,7 @@ export const StoreSelection = () => {
                                 </div>
                             );
                         })()}
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
