@@ -9,7 +9,7 @@ import {
 /**
  * Document fields with `_id` and foreign keys as `ObjectId` instead of `string`.
  */
-type ReservationRateDocumentFields = Omit<ReservationRate, "_id" | "storeId"> & {
+export type ReservationRateDocumentFields = Omit<ReservationRate, "_id" | "storeId"> & {
     _id: Types.ObjectId;
     storeId: Types.ObjectId;
 };

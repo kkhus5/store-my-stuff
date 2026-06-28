@@ -5,7 +5,7 @@ import type { Customer } from "./types.js";
 /**
  * Document fields with `_id` as `ObjectId` instead of `string`.
  */
-type CustomerDocumentFields = Omit<Customer, "_id"> & { _id: Types.ObjectId };
+export type CustomerDocumentFields = Omit<Customer, "_id"> & { _id: Types.ObjectId };
 
 /**
  * Mongoose document type for `Customer` model.

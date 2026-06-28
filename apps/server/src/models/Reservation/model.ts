@@ -5,7 +5,7 @@ import { type Reservation, ReservationStatus } from "./types.js";
 /**
  * Document fields with `_id` and foreign keys as `ObjectId` instead of `string`.
  */
-type ReservationDocumentFields = Omit<
+export type ReservationDocumentFields = Omit<
     Reservation,
     "_id" | "storeId" | "customerId" | "reservationRateId"
 > & {
