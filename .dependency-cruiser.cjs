@@ -17,13 +17,11 @@ module.exports = {
             path: ["node_modules"],
         },
         tsPreCompilationDeps: false,
-        tsConfig: {
-            fileName: "apps/server/tsconfig.json",
-        },
         enhancedResolveOptions: {
             exportsFields: ["exports"],
             conditionNames: ["import", "require", "node", "default"],
             mainFields: ["module", "main", "types", "typings"],
+            extensions: [".ts", ".js", ".json"],
         },
     },
 };
