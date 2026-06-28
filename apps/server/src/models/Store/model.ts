@@ -5,7 +5,7 @@ import type { Store } from "./types.js";
 /**
  * Document fields with `_id` as `ObjectId` instead of `string`.
  */
-type StoreDocumentFields = Omit<Store, "_id"> & { _id: Types.ObjectId };
+export type StoreDocumentFields = Omit<Store, "_id"> & { _id: Types.ObjectId };
 
 /**
  * Mongoose document type for `Store` model.
