@@ -4,8 +4,8 @@ import "./config/ingestEnvironmentFiles.js";
 import express from "express";
 
 import { serverPort } from "./config/index.js";
+import { connectMongoose } from "./config/mongoConfig.js";
 import { v1Router } from "./routes/v1/index.js";
-import { connectMongoose } from "./utils/mongoConfig.js";
 
 const app = express();
 
