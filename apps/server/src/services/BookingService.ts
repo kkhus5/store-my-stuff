@@ -1,7 +1,16 @@
 import { BounceClient } from "../clients/bounce/index.js";
-import { BouncePaymentProcessingStatus, type BounceProcessPaymentResponse } from "../clients/bounce/types.js";
-import { type Reservation, ReservationStatus } from "../models/Reservation/types.js";
-import { type ReservationRate, ReservationRateCurrency } from "../models/ReservationRate/types.js";
+import {
+    BouncePaymentProcessingStatus,
+    type BounceProcessPaymentResponse,
+} from "../clients/bounce/types.js";
+import {
+    type Reservation,
+    ReservationStatus,
+} from "../models/Reservation/types.js";
+import {
+    type ReservationRate,
+    ReservationRateCurrency,
+} from "../models/ReservationRate/types.js";
 import { CustomerRepository } from "../repositories/CustomerRepository.js";
 import { ReservationRepository } from "../repositories/ReservationRepository.js";
 import { ReservationRateRepository } from "../repositories/ReservationRateRepository.js";
@@ -23,7 +32,7 @@ type BookingResult =
 
 /**
  * Handles all booking-related business logic.
- * 
+ *
  * @example
  * ```ts
  * await BookingService.createBooking({ ... });
@@ -33,14 +42,17 @@ export const BookingService = {
     /**
      * Creates a new booking for a customer at a store.
      */
-    createBooking
+    createBooking,
 };
 
 /**
  * Creates a new booking for a customer at a store.
  */
-async function createBooking(params: CreateBookingParams): Promise<BookingResult> {
-    const { storeId, name, email, cardNumber, numItems, startTime, endTime } = params;
+async function createBooking(
+    params: CreateBookingParams,
+): Promise<BookingResult> {
+    const { storeId, name, email, cardNumber, numItems, startTime, endTime } =
+        params;
 
     // Ensure a valid time window is provided.
     if (endTime <= startTime) {
@@ -66,12 +78,12 @@ async function createBooking(params: CreateBookingParams): Promise<BookingResult
     const overlapping = await ReservationRepository.getOverlappingReservations(
         storeId,
         startTime,
-        endTime
+        endTime,
     );
 
     const reservedItemCount = overlapping.reduce(
         (sum, r) => sum + r.itemCount,
-        0
+        0,
     );
 
     if (reservedItemCount + numItems > store.capacity) {
@@ -83,7 +95,7 @@ async function createBooking(params: CreateBookingParams): Promise<BookingResult
     const rates = await ReservationRateRepository.getRatesForDateRange(
         storeId,
         dates[0],
-        dates[dates.length - 1]
+        dates[dates.length - 1],
     );
 
     // Group rates by date.
@@ -109,13 +121,13 @@ async function createBooking(params: CreateBookingParams): Promise<BookingResult
         currency,
         cardNumber,
         email,
-        name
+        name,
     });
 
     if (!isPaymentSuccess(paymentResult)) {
         return {
             success: false,
-            reason: `Payment failed: ${paymentResult.detail}`
+            reason: `Payment failed: ${paymentResult.detail}`,
         };
     }
 
@@ -128,7 +140,7 @@ async function createBooking(params: CreateBookingParams): Promise<BookingResult
         currency,
         startTime,
         endTime,
-        status: ReservationStatus.RESERVED
+        status: ReservationStatus.RESERVED,
     });
 
     return { success: true, reservation };
@@ -160,7 +172,11 @@ function toDateKey(date: Date): string {
 }
 
 function isPaymentSuccess(
-    result: BounceProcessPaymentResponse | { responseCode: number; detail: string }
+    result:
+        BounceProcessPaymentResponse | { responseCode: number; detail: string },
 ): result is BounceProcessPaymentResponse {
-    return "transactionId" in result && result.status === BouncePaymentProcessingStatus.COMPLETED;
+    return (
+        "transactionId" in result &&
+        result.status === BouncePaymentProcessingStatus.COMPLETED
+    );
 }

@@ -9,7 +9,7 @@ import type { Store } from "../models/Store/types.js";
 function toStore(doc: FlattenMaps<StoreDocumentFields>): Store {
     return {
         ...doc,
-        _id: doc._id.toString()
+        _id: doc._id.toString(),
     };
 }
 
@@ -22,7 +22,7 @@ export const StoreRepository = {
      *
      * @throws `Error` if store not found.
      */
-    getStoreById
+    getStoreById,
 };
 
 /**

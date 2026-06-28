@@ -1,7 +1,9 @@
 {
-  "name": "@store-my-stuff/typescript-config",
-  "version": "0.0.0",
-  "private": true,
-  "license": "ISC",
-  "files": ["*.json"]
+    "name": "@store-my-stuff/typescript-config",
+    "version": "0.0.0",
+    "private": true,
+    "license": "ISC",
+    "files": [
+        "*.json"
+    ]
 }

@@ -2,7 +2,7 @@ import type { FlattenMaps } from "mongoose";
 
 import {
     type CustomerDocumentFields,
-    CustomerModel
+    CustomerModel,
 } from "../models/Customer/model.js";
 import type { Customer } from "../models/Customer/types.js";
 
@@ -12,7 +12,7 @@ import type { Customer } from "../models/Customer/types.js";
 function toCustomer(doc: FlattenMaps<CustomerDocumentFields>): Customer {
     return {
         ...doc,
-        _id: doc._id.toString()
+        _id: doc._id.toString(),
     };
 }
 
@@ -29,7 +29,7 @@ export const CustomerRepository = {
     /**
      * Create a new customer document.
      */
-    createCustomer
+    createCustomer,
 };
 
 /**
@@ -47,7 +47,7 @@ async function getCustomerByEmail(email: string): Promise<Customer | null> {
  * Create a new customer document.
  */
 async function createCustomer(
-    data: Pick<Customer, "name" | "email">
+    data: Pick<Customer, "name" | "email">,
 ): Promise<Customer> {
     const doc = await CustomerModel.create(data);
 

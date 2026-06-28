@@ -1,6 +1,6 @@
 export enum BouncePaymentProcessingStatus {
     COMPLETED = "completed",
-    FAILED = "failed"
+    FAILED = "failed",
 }
 
 export type BounceProcessPaymentRequest = {

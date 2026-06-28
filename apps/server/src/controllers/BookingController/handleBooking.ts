@@ -12,22 +12,15 @@ export const HandleBookingBodySchema = z.object({
     cardNumber: z.string(),
     numItems: z.number().min(1), // At least one item must be booked.
     startTime: z.coerce.date(),
-    endTime: z.coerce.date()
+    endTime: z.coerce.date(),
 });
 
 export async function handleBooking(
     req: TypedRequestBody<typeof HandleBookingBodySchema>,
-    res: Response
+    res: Response,
 ) {
-    const {
-        storeId,
-        name,
-        email,
-        cardNumber,
-        numItems,
-        startTime,
-        endTime
-    } = req.body;
+    const { storeId, name, email, cardNumber, numItems, startTime, endTime } =
+        req.body;
 
     const result = await BookingService.createBooking({
         storeId,
@@ -36,7 +29,7 @@ export async function handleBooking(
         cardNumber,
         numItems,
         startTime,
-        endTime
+        endTime,
     });
 
     if (!result.success) {
@@ -44,5 +37,7 @@ export async function handleBooking(
         return;
     }
 
-    res.status(HttpStatusCode.Created).json({ reservation: result.reservation });
+    res.status(HttpStatusCode.Created).json({
+        reservation: result.reservation,
+    });
 }

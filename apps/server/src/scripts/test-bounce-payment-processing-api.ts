@@ -13,7 +13,7 @@ const execute = async () => {
         currency: "USD",
         cardNumber: "1234567890123456",
         email: "test@example.com",
-        name: "Test User"
+        name: "Test User",
     });
 
     console.log("Result:", result);
@@ -27,7 +27,7 @@ void (async () => {
 })()
     .then(execute)
     .then(() => process.exit(0))
-    .catch(error => {
+    .catch((error) => {
         console.error("error occurred", { error });
         process.exit(1);
     });
