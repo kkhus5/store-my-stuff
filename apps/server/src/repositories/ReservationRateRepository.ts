@@ -28,7 +28,11 @@ export const ReservationRateRepository = {
      *
      * @returns The matching rate, or `null` if none exists.
      */
-    getRate
+    getRate,
+    /**
+     * Find all reservation rates for a store within a date range (inclusive).
+     */
+    getRatesForDateRange
 };
 
 /**
@@ -48,4 +52,22 @@ async function getRate(
         .exec();
 
     return doc ? toReservationRate(doc) : null;
+}
+
+/**
+ * Find all reservation rates for a store within a date range (inclusive).
+ */
+async function getRatesForDateRange(
+    storeId: string,
+    startDate: Date,
+    endDate: Date
+): Promise<ReservationRate[]> {
+    const docs = await ReservationRateModel.find({
+        storeId,
+        date: { $gte: startDate, $lte: endDate }
+    })
+        .lean()
+        .exec();
+
+    return docs.map(toReservationRate);
 }

@@ -1,3 +1,5 @@
+import { ReservationRateCurrency } from "../ReservationRate/types.js";
+
 /**
  * Status of a reservation.
  *
@@ -32,13 +34,17 @@ export interface Reservation {
      */
     customerId: string;
     /**
-     * Foreign key for the `ReservationRate` document (how much the customer will be charged).
-     */
-    reservationRateId: string;
-    /**
      * How many items the customer will be storing in this reservation.
      */
     itemCount: number;
+    /**
+     * Total cost of the reservation, in cents.
+     */
+    totalCost: number;
+    /**
+     * Currency code for the total cost.
+     */
+    currency: ReservationRateCurrency;
     /**
      * When this reservation starts.
      */

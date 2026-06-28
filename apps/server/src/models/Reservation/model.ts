@@ -1,5 +1,7 @@
 import { HydratedDocument, model, Schema, Types } from "mongoose";
 
+import { ReservationRateCurrency } from "../ReservationRate/types.js";
+
 import { type Reservation, ReservationStatus } from "./types.js";
 
 /**
@@ -7,12 +9,11 @@ import { type Reservation, ReservationStatus } from "./types.js";
  */
 export type ReservationDocumentFields = Omit<
     Reservation,
-    "_id" | "storeId" | "customerId" | "reservationRateId"
+    "_id" | "storeId" | "customerId"
 > & {
     _id: Types.ObjectId;
     storeId: Types.ObjectId;
     customerId: Types.ObjectId;
-    reservationRateId: Types.ObjectId;
 };
 
 /**
@@ -34,12 +35,13 @@ const ReservationSchema = new Schema(
             ref: "Customer",
             required: true
         },
-        reservationRateId: {
-            type: Schema.Types.ObjectId,
-            ref: "ReservationRate",
-            required: true 
-        },
         itemCount: { type: Number, required: true },
+        totalCost: { type: Number, required: true },
+        currency: {
+            type: String,
+            enum: Object.values(ReservationRateCurrency),
+            required: true
+        },
         startTime: { type: Date, required: true },
         endTime: { type: Date, required: true },
         status: {
