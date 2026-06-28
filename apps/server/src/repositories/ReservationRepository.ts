@@ -25,6 +25,9 @@ function toReservation(
  * Handles storage and retrieval of `Reservation` data.
  */
 export const ReservationRepository = {
+    /**
+     * Create a new reservation document.
+     */
     createReservation
 };
 

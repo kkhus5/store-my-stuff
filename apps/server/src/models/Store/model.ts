@@ -1,5 +1,7 @@
 import { HydratedDocument, model, Schema, Types } from "mongoose";
 
+import { ReservationRateCurrency, ReservationRateType } from "../ReservationRate/index.js";
+
 import type { Store } from "./types.js";
 
 /**
@@ -34,6 +36,15 @@ const BusinessHoursSchema = new Schema(
     { _id: false, timestamps: false }
 );
 
+const DefaultRateSchema = new Schema(
+    {
+        rate: { type: Number, required: true },
+        type: { type: String, enum: Object.values(ReservationRateType), required: true },
+        currency: { type: String, enum: Object.values(ReservationRateCurrency), required: true }
+    },
+    { _id: false, timestamps: false }
+);
+
 const StoreSchema = new Schema(
     {
         name: { type: String, required: true },
@@ -44,7 +55,8 @@ const StoreSchema = new Schema(
             required: true
         },
         timezone: { type: String, required: true },
-        capacity: { type: Number, required: true }
+        capacity: { type: Number, required: true },
+        defaultRate: { type: DefaultRateSchema, required: true }
     },
     { timestamps: true }
 );
