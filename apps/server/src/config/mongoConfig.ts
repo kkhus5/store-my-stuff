@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-import { mongoUri } from "../config/index.js";
+import { mongoUri } from "./index.js";
 
 export const connectMongoose = async () => {
     try {

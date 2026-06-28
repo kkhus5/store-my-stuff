@@ -1,3 +1,5 @@
+import { ReservationRateCurrency, ReservationRateType } from "../ReservationRate/index.js";
+
 /**
  * Domain type for a store in our storage network.
  *
@@ -37,6 +39,11 @@ export interface Store {
      * The maximum number of items that can be stored at the store.
      */
     capacity: number;
+    defaultRate: {
+        rate: number;
+        type: ReservationRateType;
+        currency: ReservationRateCurrency;
+    };
     createdAt: Date;
     updatedAt: Date;
 }

@@ -1,8 +1,11 @@
 /**
  * Whether a reservation rate is charged per hour or per day.
+ * 
+ * Only daily rates are supported currently.
+ * 
+ * TODO: Support hourly rates.
  */
 export enum ReservationRateType {
-    HOURLY = "HOURLY",
     DAILY = "DAILY"
 }
 
