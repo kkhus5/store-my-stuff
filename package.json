@@ -8,6 +8,7 @@
         "lint": "turbo run lint",
         "format": "prettier --check .",
         "check-types": "turbo run check-types",
+        "check:circular": "depcruise --config .dependency-cruiser.cjs apps/server/src",
         "test": "turbo run test",
         "prepare": "husky"
     },
@@ -17,6 +18,7 @@
         "eslint": "^10.6.0",
         "eslint-config-prettier": "^10.1.8",
         "husky": "^9.1.7",
+        "dependency-cruiser": "^18.0.0",
         "lint-staged": "^17.0.8",
         "prettier": "^3.9.1",
         "turbo": "^2.9.18",
