@@ -23,6 +23,10 @@ export const StoreRepository = {
      * @throws `Error` if store not found.
      */
     getStoreById,
+    /**
+     * Create a new store document.
+     */
+    createStore,
 };
 
 /**
@@ -34,4 +38,15 @@ async function getStoreById(id: string): Promise<Store> {
     const doc = await StoreModel.findById(id).lean().orFail().exec();
 
     return toStore(doc);
+}
+
+/**
+ * Create a new store document.
+ */
+async function createStore(
+    data: Omit<Store, "_id" | "createdAt" | "updatedAt">,
+): Promise<Store> {
+    const doc = await StoreModel.create(data);
+
+    return toStore(doc.toObject());
 }
