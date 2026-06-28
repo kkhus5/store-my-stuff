@@ -4,6 +4,6 @@ export const bounceAxiosClient = axios.create({
     baseURL: "https://fullstack-challenge-api.usebounce.io",
     headers: {
         accept: "application/json",
-        "Content-Type": "application/json"
-    }
+        "Content-Type": "application/json",
+    },
 });

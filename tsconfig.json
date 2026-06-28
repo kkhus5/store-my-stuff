@@ -1,7 +1,4 @@
 {
-  "references": [
-    { "path": "apps/server" },
-    { "path": "apps/booking-web" }
-  ],
-  "files": []
+    "references": [{ "path": "apps/server" }, { "path": "apps/booking-web" }],
+    "files": []
 }

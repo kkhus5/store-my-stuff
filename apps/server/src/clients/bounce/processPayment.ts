@@ -6,7 +6,7 @@ import {
     type BouncePaymentProcessingError,
     BouncePaymentProcessingStatus,
     type BounceProcessPaymentRequest,
-    type BounceProcessPaymentResponse
+    type BounceProcessPaymentResponse,
 } from "./types.js";
 
 type RequestBody = {
@@ -48,23 +48,21 @@ type ValidationErrorResponseData = {
     }[];
 };
 
-type ErrorResponseData =
-    | PaymentErrorResponseData
-    | ValidationErrorResponseData;
+type ErrorResponseData = PaymentErrorResponseData | ValidationErrorResponseData;
 
 function isValidationError(
-    data: ErrorResponseData
+    data: ErrorResponseData,
 ): data is ValidationErrorResponseData {
     return Array.isArray(data.detail);
 }
 
 /**
  * Process payments with the provided customer and payment details.
- * 
+ *
  * @see https://fullstack-challenge-api.usebounce.io/v1/docs#/
  */
 export const processPayment = async (
-    request: BounceProcessPaymentRequest
+    request: BounceProcessPaymentRequest,
 ): Promise<BounceProcessPaymentResponse | BouncePaymentProcessingError> => {
     try {
         const response = await bounceAxiosClient.post<
@@ -76,7 +74,7 @@ export const processPayment = async (
             currency: request.currency,
             card_number: request.cardNumber,
             email: request.email,
-            name: request.name
+            name: request.name,
         });
 
         const data = response.data;
@@ -89,32 +87,35 @@ export const processPayment = async (
             paymentMethod: data.payment_method,
             processingFee: data.processing_fee,
             status: match(data.status)
-                .with("completed", () => BouncePaymentProcessingStatus.COMPLETED)
+                .with(
+                    "completed",
+                    () => BouncePaymentProcessingStatus.COMPLETED,
+                )
                 .otherwise(() => BouncePaymentProcessingStatus.FAILED),
             timestamp: new Date(data.timestamp),
-            transactionId: data.transaction_id
+            transactionId: data.transaction_id,
         };
     } catch (error) {
         if (isAxiosError<ErrorResponseData>(error) && error.response) {
             const { status, data } = error.response;
 
-            console.error(
-                "Bounce API payment processing error:",
-                { status, data }
-            );
+            console.error("Bounce API payment processing error:", {
+                status,
+                data,
+            });
 
             if (isValidationError(data)) {
                 return {
                     responseCode: status,
                     detail: data.detail
                         .map((e) => `${e.loc.join(".")}: ${e.msg}`)
-                        .join("; ")
+                        .join("; "),
                 };
             }
 
             return {
                 responseCode: status,
-                detail: data.detail
+                detail: data.detail,
             };
         }
 
@@ -122,7 +123,7 @@ export const processPayment = async (
 
         return {
             responseCode: HttpStatusCode.InternalServerError,
-            detail: "An unexpected error occurred while processing the payment."
+            detail: "An unexpected error occurred while processing the payment.",
         };
     }
 };

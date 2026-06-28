@@ -1,19 +1,19 @@
 /**
  * Whether a reservation rate is charged per hour or per day.
- * 
+ *
  * Only daily rates are supported currently.
- * 
+ *
  * TODO: Support hourly rates.
  */
 export enum ReservationRateType {
-    DAILY = "DAILY"
+    DAILY = "DAILY",
 }
 
 /**
  * Supported currency codes for reservation rates.
  */
 export enum ReservationRateCurrency {
-    USD = "USD"
+    USD = "USD",
 }
 
 /**
@@ -44,7 +44,7 @@ export interface ReservationRate {
     type: ReservationRateType;
     /**
      * Currency code for the rate.
-     * 
+     *
      * Only USD is supported currently.
      */
     currency: ReservationRateCurrency;

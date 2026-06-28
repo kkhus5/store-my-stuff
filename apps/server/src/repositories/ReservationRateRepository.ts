@@ -2,7 +2,7 @@ import type { FlattenMaps } from "mongoose";
 
 import {
     type ReservationRateDocumentFields,
-    ReservationRateModel
+    ReservationRateModel,
 } from "../models/ReservationRate/model.js";
 import type { ReservationRate } from "../models/ReservationRate/types.js";
 
@@ -10,12 +10,12 @@ import type { ReservationRate } from "../models/ReservationRate/types.js";
  * Maps a lean `ReservationRate` document to the domain type.
  */
 function toReservationRate(
-    doc: FlattenMaps<ReservationRateDocumentFields>
+    doc: FlattenMaps<ReservationRateDocumentFields>,
 ): ReservationRate {
     return {
         ...doc,
         _id: doc._id.toString(),
-        storeId: doc.storeId.toString()
+        storeId: doc.storeId.toString(),
     };
 }
 
@@ -32,7 +32,7 @@ export const ReservationRateRepository = {
     /**
      * Find all reservation rates for a store within a date range (inclusive).
      */
-    getRatesForDateRange
+    getRatesForDateRange,
 };
 
 /**
@@ -42,11 +42,11 @@ export const ReservationRateRepository = {
  */
 async function getRate(
     storeId: string,
-    date: Date
+    date: Date,
 ): Promise<ReservationRate | null> {
     const doc = await ReservationRateModel.findOne({
         storeId,
-        date
+        date,
     })
         .lean()
         .exec();
@@ -60,11 +60,11 @@ async function getRate(
 async function getRatesForDateRange(
     storeId: string,
     startDate: Date,
-    endDate: Date
+    endDate: Date,
 ): Promise<ReservationRate[]> {
     const docs = await ReservationRateModel.find({
         storeId,
-        date: { $gte: startDate, $lte: endDate }
+        date: { $gte: startDate, $lte: endDate },
     })
         .lean()
         .exec();

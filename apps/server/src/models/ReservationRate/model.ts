@@ -9,7 +9,10 @@ import {
 /**
  * Document fields with `_id` and foreign keys as `ObjectId` instead of `string`.
  */
-export type ReservationRateDocumentFields = Omit<ReservationRate, "_id" | "storeId"> & {
+export type ReservationRateDocumentFields = Omit<
+    ReservationRate,
+    "_id" | "storeId"
+> & {
     _id: Types.ObjectId;
     storeId: Types.ObjectId;
 };
@@ -19,29 +22,30 @@ export type ReservationRateDocumentFields = Omit<ReservationRate, "_id" | "store
  *
  * Represents the booking rate for a given date at a store.
  */
-export type ReservationRateDocument = HydratedDocument<ReservationRateDocumentFields>;
+export type ReservationRateDocument =
+    HydratedDocument<ReservationRateDocumentFields>;
 
 const ReservationRateSchema = new Schema(
     {
         storeId: {
             type: Schema.Types.ObjectId,
             ref: "Store",
-            required: true
+            required: true,
         },
         date: { type: Date, required: true },
         rate: { type: Number, required: true },
         type: {
             type: String,
             enum: Object.values(ReservationRateType),
-            required: true
+            required: true,
         },
         currency: {
             type: String,
             enum: Object.values(ReservationRateCurrency),
-            required: true
-        }
+            required: true,
+        },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 /**
@@ -49,5 +53,5 @@ const ReservationRateSchema = new Schema(
  */
 export const ReservationRateModel = model<ReservationRateDocumentFields>(
     "ReservationRate",
-    ReservationRateSchema
+    ReservationRateSchema,
 );

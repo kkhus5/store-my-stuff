@@ -26,12 +26,12 @@ The server starts at [http://localhost:3001](http://localhost:3001).
 
 ## Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start dev server with hot-reload (via `tsx watch`) |
-| `pnpm build` | Compile TypeScript to `dist/` |
-| `pnpm start` | Run the compiled build (`node dist/index.js`) |
-| `pnpm check-types` | Type-check without emitting files |
+| Script             | Description                                        |
+| ------------------ | -------------------------------------------------- |
+| `pnpm dev`         | Start dev server with hot-reload (via `tsx watch`) |
+| `pnpm build`       | Compile TypeScript to `dist/`                      |
+| `pnpm start`       | Run the compiled build (`node dist/index.js`)      |
+| `pnpm check-types` | Type-check without emitting files                  |
 
 ## Tech Stack
 

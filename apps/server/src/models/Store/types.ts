@@ -1,4 +1,7 @@
-import { ReservationRateCurrency, ReservationRateType } from "../ReservationRate/index.js";
+import {
+    ReservationRateCurrency,
+    ReservationRateType,
+} from "../ReservationRate/index.js";
 
 /**
  * Domain type for a store in our storage network.
@@ -20,7 +23,7 @@ export interface Store {
     };
     /**
      * The store's business hours stored in a 2D array.
-     * 
+     *
      * Outer array indices represent the day of week (e.g. 0 for Sunday and 6 for Saturday).
      * Inner array is a list of business hours for that day, allowing for split shifts.
      */

@@ -26,12 +26,12 @@ The app starts at [http://localhost:5173](http://localhost:5173).
 
 ## Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start Vite dev server with HMR |
-| `pnpm build` | Type-check and build for production (output in `dist/`) |
-| `pnpm preview` | Preview the production build locally |
-| `pnpm check-types` | Type-check without building |
+| Script             | Description                                             |
+| ------------------ | ------------------------------------------------------- |
+| `pnpm dev`         | Start Vite dev server with HMR                          |
+| `pnpm build`       | Type-check and build for production (output in `dist/`) |
+| `pnpm preview`     | Preview the production build locally                    |
+| `pnpm check-types` | Type-check without building                             |
 
 ## Tech Stack
 

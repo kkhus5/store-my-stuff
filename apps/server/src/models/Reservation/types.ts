@@ -12,7 +12,7 @@ export enum ReservationStatus {
     PENDING = "PENDING",
     RESERVED = "RESERVED",
     CANCELED = "CANCELED",
-    ENDED = "ENDED"
+    ENDED = "ENDED",
 }
 
 /**

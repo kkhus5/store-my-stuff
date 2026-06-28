@@ -16,11 +16,11 @@ app.get("/health", (_, res) => res.json({ status: "ok" }));
 app.use("/api/v1", v1Router);
 
 const setup = async () => {
-  await connectMongoose();
+    await connectMongoose();
 
-  app.listen(serverPort, () => {
-    console.log("server running", { port: serverPort });
-  });
+    app.listen(serverPort, () => {
+        console.log("server running", { port: serverPort });
+    });
 };
 
 setup();

@@ -4,7 +4,8 @@ module.exports = {
         {
             name: "no-circular",
             severity: "error",
-            comment: "Circular dependencies lead to hard-to-debug issues and tight coupling.",
+            comment:
+                "Circular dependencies lead to hard-to-debug issues and tight coupling.",
             from: {},
             to: {
                 circular: true,

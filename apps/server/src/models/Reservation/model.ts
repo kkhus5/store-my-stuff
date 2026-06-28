@@ -28,29 +28,29 @@ const ReservationSchema = new Schema(
         storeId: {
             type: Schema.Types.ObjectId,
             ref: "Store",
-            required: true
+            required: true,
         },
         customerId: {
             type: Schema.Types.ObjectId,
             ref: "Customer",
-            required: true
+            required: true,
         },
         itemCount: { type: Number, required: true },
         totalCost: { type: Number, required: true },
         currency: {
             type: String,
             enum: Object.values(ReservationRateCurrency),
-            required: true
+            required: true,
         },
         startTime: { type: Date, required: true },
         endTime: { type: Date, required: true },
         status: {
             type: String,
             enum: Object.values(ReservationStatus),
-            required: true
-        }
+            required: true,
+        },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 /**
@@ -58,5 +58,5 @@ const ReservationSchema = new Schema(
  */
 export const ReservationModel = model<ReservationDocumentFields>(
     "Reservation",
-    ReservationSchema
+    ReservationSchema,
 );

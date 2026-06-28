@@ -1,7 +1,7 @@
 {
-  "extends": "@store-my-stuff/typescript-config/react.json",
-  "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
-  },
-  "include": ["src"]
+    "extends": "@store-my-stuff/typescript-config/react.json",
+    "compilerOptions": {
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
+    },
+    "include": ["src"]
 }

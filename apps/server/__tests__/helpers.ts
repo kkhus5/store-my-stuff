@@ -3,7 +3,7 @@ import { beforeAll, afterAll, afterEach } from "vitest";
 
 /**
  * Connect to the in-memory MongoDB instance before all tests in a file.
- * 
+ *
  * Call this at the top of any test file that needs database access.
  */
 export function useTestDatabase() {

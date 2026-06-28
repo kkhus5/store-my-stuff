@@ -1,6 +1,9 @@
 import { HydratedDocument, model, Schema, Types } from "mongoose";
 
-import { ReservationRateCurrency, ReservationRateType } from "../ReservationRate/index.js";
+import {
+    ReservationRateCurrency,
+    ReservationRateType,
+} from "../ReservationRate/index.js";
 
 import type { Store } from "./types.js";
 
@@ -11,7 +14,7 @@ export type StoreDocumentFields = Omit<Store, "_id"> & { _id: Types.ObjectId };
 
 /**
  * Mongoose document type for `Store` model.
- * 
+ *
  * Represents the business info for a store in our storage network.
  */
 export type StoreDocument = HydratedDocument<StoreDocumentFields>;
@@ -23,26 +26,34 @@ const AddressSchema = new Schema(
         city: { type: String, required: true },
         state: { type: String, default: null },
         country: { type: String, required: true },
-        postalCode: { type: String, default: null }
+        postalCode: { type: String, default: null },
     },
-    { _id: false, timestamps: false }
+    { _id: false, timestamps: false },
 );
 
 const BusinessHoursSchema = new Schema(
     {
         open: { type: String, required: true },
-        close: { type: String, required: true }
+        close: { type: String, required: true },
     },
-    { _id: false, timestamps: false }
+    { _id: false, timestamps: false },
 );
 
 const DefaultRateSchema = new Schema(
     {
         rate: { type: Number, required: true },
-        type: { type: String, enum: Object.values(ReservationRateType), required: true },
-        currency: { type: String, enum: Object.values(ReservationRateCurrency), required: true }
+        type: {
+            type: String,
+            enum: Object.values(ReservationRateType),
+            required: true,
+        },
+        currency: {
+            type: String,
+            enum: Object.values(ReservationRateCurrency),
+            required: true,
+        },
     },
-    { _id: false, timestamps: false }
+    { _id: false, timestamps: false },
 );
 
 const StoreSchema = new Schema(
@@ -52,13 +63,13 @@ const StoreSchema = new Schema(
         address: { type: AddressSchema, required: true },
         businessHours: {
             type: [[BusinessHoursSchema]],
-            required: true
+            required: true,
         },
         timezone: { type: String, required: true },
         capacity: { type: Number, required: true },
-        defaultRate: { type: DefaultRateSchema, required: true }
+        defaultRate: { type: DefaultRateSchema, required: true },
     },
-    { timestamps: true }
+    { timestamps: true },
 );
 
 /**
