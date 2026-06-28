@@ -51,6 +51,30 @@ describe("StoreRepository", () => {
         });
     });
 
+    describe("getAllStores", () => {
+        it("returns an empty array when no stores exist", async () => {
+            const stores = await StoreRepository.getAllStores();
+
+            expect(stores).toEqual([]);
+        });
+
+        it("returns all stores", async () => {
+            await StoreRepository.createStore(storeData);
+            await StoreRepository.createStore({
+                ...storeData,
+                name: "Uptown Storage",
+            });
+
+            const stores = await StoreRepository.getAllStores();
+
+            expect(stores).toHaveLength(2);
+            expect(stores.map((s) => s.name).sort()).toEqual([
+                "Downtown Storage",
+                "Uptown Storage",
+            ]);
+        });
+    });
+
     describe("getStoreById", () => {
         it("returns the store when it exists", async () => {
             const created = await StoreRepository.createStore(storeData);

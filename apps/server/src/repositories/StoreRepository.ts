@@ -18,6 +18,10 @@ function toStore(doc: FlattenMaps<StoreDocumentFields>): Store {
  */
 export const StoreRepository = {
     /**
+     * Get all stores.
+     */
+    getAllStores,
+    /**
      * Get a store by its ID.
      *
      * @throws `Error` if store not found.
@@ -28,6 +32,15 @@ export const StoreRepository = {
      */
     createStore,
 };
+
+/**
+ * Get all stores.
+ */
+async function getAllStores(): Promise<Store[]> {
+    const docs = await StoreModel.find().lean().exec();
+
+    return docs.map(toStore);
+}
 
 /**
  * Get a store by its ID.
