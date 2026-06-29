@@ -1,5 +1,19 @@
 /**
- * Represents astore in our storage network.
+ * Per-day availability and pricing for a store, returned by the availability endpoint.
+ */
+export type StoreAvailabilityDay = {
+    /** ISO date string, e.g. "2026-06-28" */
+    date: string;
+    /** Rate in cents for this day. */
+    rate: number;
+    /** Currency code, e.g. "USD". */
+    currency: string;
+    /** How many more items can be stored on this day. */
+    remainingCapacity: number;
+};
+
+/**
+ * Represents a store in our storage network.
  */
 export type Store = {
     id: string;
