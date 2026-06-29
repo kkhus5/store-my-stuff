@@ -1,10 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import { api } from "../../api";
 import { getAllBusinessHours } from "../../utils/formatBusinessHours";
 
 export const StoreSelection = () => {
+    const location = useLocation();
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    useEffect(() => {
+        if (location.state?.bookingSuccess) {
+            setShowSuccess(true);
+            // Clear the state so the popup doesn't reappear on refresh.
+            window.history.replaceState({}, "");
+        }
+    }, [location.state]);
+
     const { data, isLoading, error } = useQuery({
         queryKey: ["stores"],
         queryFn: api.store.getAllStores,
@@ -40,6 +52,23 @@ export const StoreSelection = () => {
 
     return (
         <div className="flex flex-col gap-6">
+            {showSuccess && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                    <div className="mx-4 flex flex-col items-center gap-4 rounded-xl bg-white px-8 py-10 shadow-lg">
+                        <p className="text-lg font-semibold text-gray-900">
+                            Booking placed. Hop to your next destination!
+                        </p>
+                        <button
+                            type="button"
+                            onClick={() => setShowSuccess(false)}
+                            className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700"
+                        >
+                            Done
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <div>
                 <h2 className="text-xl font-semibold text-gray-900 sm:text-2xl">
                     Book storage space for your stuff

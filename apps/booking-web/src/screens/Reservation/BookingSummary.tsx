@@ -8,6 +8,9 @@ type BookingSummaryProps = {
     bagCount: number;
     startDate: string | null;
     endDate: string | null;
+    onBook: () => void;
+    isSubmitting: boolean;
+    bookingError: string | null;
 };
 
 /**
@@ -60,6 +63,9 @@ export const BookingSummary = ({
     bagCount,
     startDate,
     endDate,
+    onBook,
+    isSubmitting,
+    bookingError,
 }: BookingSummaryProps) => {
     const months =
         startDate && endDate ? getMonthsInRange(startDate, endDate) : [];
@@ -171,6 +177,25 @@ export const BookingSummary = ({
                     </dd>
                 </div>
             </dl>
+
+            {bookingError && (
+                <div className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2">
+                    <p className="text-sm text-red-700">{bookingError}</p>
+                </div>
+            )}
+
+            <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={onBook}
+                className={`mt-4 w-full rounded-lg px-4 py-2.5 text-sm font-semibold shadow-sm transition-colors ${
+                    bookingError
+                        ? "bg-red-100 text-red-700 hover:bg-red-200"
+                        : "bg-blue-600 text-white hover:bg-blue-700"
+                } disabled:cursor-not-allowed disabled:opacity-50`}
+            >
+                {bookingError ? "Retry" : "Book"}
+            </button>
         </div>
     );
 };

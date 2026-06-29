@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { api } from "../../api";
 import type { Store } from "../../types/Store";
@@ -31,6 +31,10 @@ export const Reservation = () => {
     const [emailError, setEmailError] = useState<string | null>(null);
     const [cardNumberError, setCardNumberError] = useState<string | null>(null);
     const [nameError, setNameError] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [bookingError, setBookingError] = useState<string | null>(null);
+
+    const navigate = useNavigate();
 
     const { data, isLoading, error } = useQuery({
         queryKey: ["store", storeId],
@@ -102,8 +106,54 @@ export const Reservation = () => {
         setEndDate(newEnd);
     }
 
+    async function handleBook() {
+        const nameErr = name.trim() ? null : "Full name is required.";
+        const emailErr = validateEmail(email);
+        const cardErr = validateCardNumber(cardNumber);
+
+        setNameError(nameErr);
+        setEmailError(emailErr);
+        setCardNumberError(cardErr);
+
+        if (nameErr || emailErr || cardErr || !startDate || !endDate) return;
+
+        setIsSubmitting(true);
+        setBookingError(null);
+
+        try {
+            await api.booking.createBooking({
+                storeId: storeId!,
+                name: name.trim(),
+                email: email.trim(),
+                cardNumber: cardNumber.replace(/[\s-]/g, ""),
+                numItems: bagCount,
+                startTime: `${startDate}T00:00:00.000Z`,
+                endTime: `${endDate}T23:59:59.999Z`,
+            });
+
+            navigate("/", { state: { bookingSuccess: true } });
+        } catch (err) {
+            const message =
+                err instanceof Error ? err.message : "Something went wrong.";
+            setBookingError(message);
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
+
     return (
-        <div className="flex flex-col gap-6">
+        <div className="relative flex flex-col gap-6">
+            {isSubmitting && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/60 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600" />
+                        <p className="text-sm font-medium text-gray-700">
+                            Placing booking...
+                        </p>
+                    </div>
+                </div>
+            )}
+
             <Link
                 to="/"
                 className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800"
@@ -152,6 +202,9 @@ export const Reservation = () => {
                 bagCount={bagCount}
                 startDate={startDate}
                 endDate={endDate}
+                onBook={handleBook}
+                isSubmitting={isSubmitting}
+                bookingError={bookingError}
             />
         </div>
     );
