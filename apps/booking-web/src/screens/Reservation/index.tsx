@@ -1,24 +1,37 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { api } from "../../api";
 import type { Store } from "../../types/Store";
+import { BagCountSelector } from "./BagCountSelector";
+import { ReservationCalendar } from "./ReservationCalendar";
 import { StoreDetails } from "./StoreDetails";
+
+function getCurrentMonth(): string {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+}
 
 export const Reservation = () => {
     const { storeId } = useParams<{ storeId: string }>();
     const queryClient = useQueryClient();
 
+    const [bagCount, setBagCount] = useState(1);
+    const [month, setMonth] = useState(getCurrentMonth);
+    const [startDate, setStartDate] = useState<string | null>(null);
+    const [endDate, setEndDate] = useState<string | null>(null);
+
     const { data, isLoading, error } = useQuery({
         queryKey: ["store", storeId],
         queryFn: () => api.store.getStore(storeId!),
         enabled: !!storeId,
-        // If the user navigated here from `StoreSelection`, the store data is
+        // If the user navigated here from StoreSelection, the store data is
         // already sitting in the React Query cache from the "stores" query.
-        // Use it as placeholder data so the page can renders instantly.
-        // We'll still fetch fresh data in the background. If the user landed
-        // here directly (e.g. page refresh), no cached data will be available
-        // and the loading state will be shown.
+        // Use it as placeholder data so the page renders instantly without a
+        // loading spinner, while still fetching fresh data in the background.
+        // If the user landed here directly (e.g. bookmark/refresh), no cached
+        // data will be available and the normal loading state kicks in.
         placeholderData: () => {
             const cached = queryClient.getQueryData<{ stores: Store[] }>([
                 "stores",
@@ -56,6 +69,14 @@ export const Reservation = () => {
         );
     }
 
+    function handleDateRangeChange(
+        newStart: string | null,
+        newEnd: string | null,
+    ) {
+        setStartDate(newStart);
+        setEndDate(newEnd);
+    }
+
     return (
         <div className="flex flex-col gap-6">
             <Link
@@ -67,11 +88,17 @@ export const Reservation = () => {
 
             <StoreDetails store={data.store} />
 
-            <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6">
-                <p className="text-center text-sm text-gray-500">
-                    Reservation form coming soon.
-                </p>
-            </div>
+            <BagCountSelector count={bagCount} onChange={setBagCount} />
+
+            <ReservationCalendar
+                storeId={storeId!}
+                bagCount={bagCount}
+                month={month}
+                onMonthChange={setMonth}
+                startDate={startDate}
+                endDate={endDate}
+                onDateRangeChange={handleDateRangeChange}
+            />
         </div>
     );
 };
