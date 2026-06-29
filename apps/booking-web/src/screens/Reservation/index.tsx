@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { api } from "../../api";
 import type { Store } from "../../types/Store";
 import { BagCountSelector } from "./BagCountSelector";
+import { BookingSummary } from "./BookingSummary";
 import { ReservationCalendar } from "./ReservationCalendar";
 import { StoreDetails } from "./StoreDetails";
 
@@ -98,6 +99,13 @@ export const Reservation = () => {
                 startDate={startDate}
                 endDate={endDate}
                 onDateRangeChange={handleDateRangeChange}
+            />
+
+            <BookingSummary
+                storeId={storeId!}
+                bagCount={bagCount}
+                startDate={startDate}
+                endDate={endDate}
             />
         </div>
     );
