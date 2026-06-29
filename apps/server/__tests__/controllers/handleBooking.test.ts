@@ -49,6 +49,7 @@ describe("handleBooking", () => {
         });
 
         const req = buildRequest({
+            idempotencyKey: "550e8400-e29b-41d4-a716-446655440000",
             storeId: "store-1",
             name: "Alice",
             email: "alice@example.com",
@@ -62,6 +63,7 @@ describe("handleBooking", () => {
         await handleBooking(req, res);
 
         expect(mockedCreateBooking).toHaveBeenCalledWith({
+            idempotencyKey: "550e8400-e29b-41d4-a716-446655440000",
             storeId: "store-1",
             name: "Alice",
             email: "alice@example.com",
@@ -83,6 +85,7 @@ describe("handleBooking", () => {
         });
 
         const req = buildRequest({
+            idempotencyKey: "660e8400-e29b-41d4-a716-446655440001",
             storeId: "store-1",
             name: "Bob",
             email: "bob@example.com",

@@ -6,6 +6,7 @@ import { TypedRequestBody } from "zod-express-middleware";
 import { BookingService } from "../../services/BookingService.js";
 
 export const HandleBookingBodySchema = z.object({
+    idempotencyKey: z.string().uuid(),
     storeId: z.string(),
     name: z.string(),
     email: z.string(),
@@ -19,10 +20,19 @@ export async function handleBooking(
     req: TypedRequestBody<typeof HandleBookingBodySchema>,
     res: Response,
 ) {
-    const { storeId, name, email, cardNumber, numItems, startTime, endTime } =
-        req.body;
+    const {
+        idempotencyKey,
+        storeId,
+        name,
+        email,
+        cardNumber,
+        numItems,
+        startTime,
+        endTime,
+    } = req.body;
 
     const result = await BookingService.createBooking({
+        idempotencyKey,
         storeId,
         name,
         email,
