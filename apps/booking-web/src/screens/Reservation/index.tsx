@@ -4,8 +4,11 @@ import { Link, useParams } from "react-router-dom";
 
 import { api } from "../../api";
 import type { Store } from "../../types/Store";
+import { validateCardNumber, validateEmail } from "../../utils/validation";
 import { BagCountSelector } from "./BagCountSelector";
 import { BookingSummary } from "./BookingSummary";
+import { PaymentInformation } from "./PaymentInformation";
+import { PersonalDetails } from "./PersonalDetails";
 import { ReservationCalendar } from "./ReservationCalendar";
 import { StoreDetails } from "./StoreDetails";
 
@@ -22,6 +25,12 @@ export const Reservation = () => {
     const [month, setMonth] = useState(getCurrentMonth);
     const [startDate, setStartDate] = useState<string | null>(null);
     const [endDate, setEndDate] = useState<string | null>(null);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [cardNumber, setCardNumber] = useState("");
+    const [emailError, setEmailError] = useState<string | null>(null);
+    const [cardNumberError, setCardNumberError] = useState<string | null>(null);
+    const [nameError, setNameError] = useState<string | null>(null);
 
     const { data, isLoading, error } = useQuery({
         queryKey: ["store", storeId],
@@ -70,6 +79,21 @@ export const Reservation = () => {
         );
     }
 
+    function handleNameChange(value: string) {
+        setName(value);
+        if (nameError) setNameError(null);
+    }
+
+    function handleEmailChange(value: string) {
+        setEmail(value);
+        if (emailError) setEmailError(null);
+    }
+
+    function handleCardNumberChange(value: string) {
+        setCardNumber(value);
+        if (cardNumberError) setCardNumberError(null);
+    }
+
     function handleDateRangeChange(
         newStart: string | null,
         newEnd: string | null,
@@ -99,6 +123,28 @@ export const Reservation = () => {
                 startDate={startDate}
                 endDate={endDate}
                 onDateRangeChange={handleDateRangeChange}
+            />
+
+            <PersonalDetails
+                name={name}
+                email={email}
+                onNameChange={handleNameChange}
+                onEmailChange={handleEmailChange}
+                nameError={nameError}
+                emailError={emailError}
+                onNameBlur={() =>
+                    setNameError(name.trim() ? null : "Full name is required.")
+                }
+                onEmailBlur={() => setEmailError(validateEmail(email))}
+            />
+
+            <PaymentInformation
+                cardNumber={cardNumber}
+                onCardNumberChange={handleCardNumberChange}
+                cardNumberError={cardNumberError}
+                onCardNumberBlur={() =>
+                    setCardNumberError(validateCardNumber(cardNumber))
+                }
             />
 
             <BookingSummary
