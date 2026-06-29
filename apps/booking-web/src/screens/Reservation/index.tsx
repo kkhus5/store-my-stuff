@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { api } from "../../api";
@@ -33,6 +33,10 @@ export const Reservation = () => {
     const [nameError, setNameError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [bookingError, setBookingError] = useState<string | null>(null);
+
+    // Generated once per booking attempt so retries are deduplicated.
+    // Reset when the user changes booking parameters after a failure.
+    const idempotencyKeyRef = useRef<string>(crypto.randomUUID());
 
     const navigate = useNavigate();
 
@@ -122,6 +126,7 @@ export const Reservation = () => {
 
         try {
             await api.booking.createBooking({
+                idempotencyKey: idempotencyKeyRef.current,
                 storeId: storeId!,
                 name: name.trim(),
                 email: email.trim(),
@@ -136,6 +141,10 @@ export const Reservation = () => {
             const message =
                 err instanceof Error ? err.message : "Something went wrong.";
             setBookingError(message);
+
+            // Generate a fresh key so the next attempt is not treated as a
+            // duplicate of the failed one.
+            idempotencyKeyRef.current = crypto.randomUUID();
         } finally {
             setIsSubmitting(false);
         }

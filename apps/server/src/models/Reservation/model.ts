@@ -25,6 +25,7 @@ export type ReservationDocument = HydratedDocument<ReservationDocumentFields>;
 
 const ReservationSchema = new Schema(
     {
+        idempotencyKey: { type: String, required: true, unique: true },
         storeId: {
             type: Schema.Types.ObjectId,
             ref: "Store",
@@ -52,6 +53,8 @@ const ReservationSchema = new Schema(
     },
     { timestamps: true },
 );
+
+ReservationSchema.index({ storeId: 1, status: 1, startTime: 1, endTime: 1 });
 
 /**
  * Mongoose model for the `Reservation` collection.

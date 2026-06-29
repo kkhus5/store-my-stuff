@@ -26,6 +26,11 @@ export enum ReservationStatus {
 export interface Reservation {
     _id: string;
     /**
+     * Client-generated key used to prevent duplicate bookings from
+     * retries or double-clicks. Enforced as a unique index in MongoDB.
+     */
+    idempotencyKey: string;
+    /**
      * Foreign key for the `Store` document (the store the reservation is for).
      */
     storeId: string;

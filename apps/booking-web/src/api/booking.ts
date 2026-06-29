@@ -1,6 +1,7 @@
 import { axiosClient } from "./shared";
 
 type CreateBookingRequest = {
+    idempotencyKey: string;
     storeId: string;
     name: string;
     email: string;
